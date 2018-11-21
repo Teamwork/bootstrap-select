@@ -186,6 +186,14 @@
     return haystack.includes(meta[3].toUpperCase());
   };
 
+  $.expr.pseudos.icontainstitle = function (obj, index, meta) {
+    var $obj = $(obj).find('a').clone();
+    $obj.find('small.text-muted').remove();
+    var haystack = ($obj.data('tokens') || $obj.text()).toString().toUpperCase();
+    return haystack.includes(meta[3].toUpperCase());
+  };
+
+
   // Case insensitive begins search
   $.expr.pseudos.ibegins = function (obj, index, meta) {
     var $obj = $(obj).find('a');
@@ -1531,7 +1539,8 @@
     _searchStyle: function () {
       var styles = {
         begins: 'ibegins',
-        startsWith: 'ibegins'
+        startsWith: 'ibegins',
+        containsTitle: 'icontainstitle'
       };
 
       return styles[this.options.liveSearchStyle] || 'icontains';

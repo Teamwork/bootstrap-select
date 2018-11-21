@@ -209,6 +209,14 @@
     return haystack.includes(meta[3].toUpperCase());
   };
 
+  $.expr.pseudos.icontainstitle = function (obj, index, meta) {
+    var $obj = $(obj).find('a').clone();
+    $obj.find('small.text-muted').remove();
+    var haystack = ($obj.data('tokens') || $obj.text()).toString().toUpperCase();
+    return haystack.includes(meta[3].toUpperCase());
+  };
+
+
   // Case insensitive begins search
   $.expr.pseudos.ibegins = function (obj, index, meta) {
     var $obj = $(obj).find('a');
@@ -1554,7 +1562,8 @@
     _searchStyle: function () {
       var styles = {
         begins: 'ibegins',
-        startsWith: 'ibegins'
+        startsWith: 'ibegins',
+        containsTitle: 'icontainstitle'
       };
 
       return styles[this.options.liveSearchStyle] || 'icontains';
@@ -1905,8 +1914,8 @@
 
   $(document)
       .data('keycount', 0)
-      .on('keydown.bs.select', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input', Selectpicker.prototype.keydown)
-      .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input', function (e) {
+      .on('keydown.bs.select', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', Selectpicker.prototype.keydown)
+      .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', function (e) {
         e.stopPropagation();
       });
 
